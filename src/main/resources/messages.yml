@@ -1,0 +1,3 @@
+prefix: "&aSimple&2Warps &7>>"
+CreateWarp:
+  noPermission: "%prefix% &fYou do not have permissions!"

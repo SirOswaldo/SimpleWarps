@@ -1,0 +1,11 @@
+main: club.spfmc.simplewarps.SimpleWarps
+name: SimpleWarps
+version: 1.0
+commands:
+  SimpleWarps:
+  CreateWarp:
+  DeleteWarp:
+  EditWarp:
+  Warp:
+  Warps:
+permissions:
