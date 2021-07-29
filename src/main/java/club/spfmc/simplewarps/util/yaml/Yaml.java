@@ -18,10 +18,7 @@
 package club.spfmc.simplewarps.util.yaml;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,10 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +51,23 @@ public class Yaml {
         this.dir = javaPlugin.getDataFolder().getPath();
         this.name = name;
     }
-    public Yaml(JavaPlugin javaPlugin, String dir, String name){
+
+    public Yaml(JavaPlugin javaPlugin, String dir, String name) {
         this.javaPlugin = javaPlugin;
-        this.dir = javaPlugin.getDataFolder().getPath() + File.separator + dir;
+        this.dir = javaPlugin.getDataFolder().getPath() + File.separator + dir.replaceAll("/", File.separator);
         this.name = name;
+    }
+
+    public static List<File> getFolderFiles(String dir) {
+        File folder = new File(dir);
+        List<File> filesList = new ArrayList<>();
+        if (folder.exists()) {
+            File[] files = folder.listFiles(pathname -> pathname.getName().endsWith(".yml"));
+            for (File file : files) {
+                filesList.add(file);
+            }
+        }
+        return filesList;
     }
 
     public FileConfiguration getFileConfiguration() {
@@ -69,31 +76,33 @@ public class Yaml {
         }
         return fileConfiguration;
     }
+
     public void reloadFileConfiguration() {
         if (fileConfiguration == null) {
             file = new File(dir, name + ".yml");
             File dirFile = new File(dir);
             if (!dirFile.exists()) {
                 if (dirFile.mkdir()) {
-                    javaPlugin.getLogger().info("The directory '" + dir +"' has been created.");
+                    javaPlugin.getLogger().info("The directory '" + dir + "' has been created.");
                 }
             }
-            try{
+            try {
                 if (file.createNewFile()) {
-                    javaPlugin.getLogger().info("The file '" + name +".yml' has been created.");
+                    javaPlugin.getLogger().info("The file '" + name + ".yml' has been created.");
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
-        if (javaPlugin.getResource(name + ".yml") != null){
+        if (javaPlugin.getResource(name + ".yml") != null) {
             Reader defConfigStream = new InputStreamReader(Objects.requireNonNull(javaPlugin.getResource(name + ".yml")), StandardCharsets.UTF_8);
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             fileConfiguration.setDefaults(defConfig);
             saveFileConfiguration();
         }
     }
+
     public void saveFileConfiguration() {
         try {
             fileConfiguration.save(file);
@@ -101,6 +110,7 @@ public class Yaml {
             javaPlugin.getLogger().log(Level.SEVERE, "No se pudo guardar el archivo.");
         }
     }
+
     public void registerFileConfiguration() {
         file = new File(dir, name + ".yml");
         if (!file.exists()) {
@@ -110,7 +120,8 @@ public class Yaml {
             reloadFileConfiguration();
         }
     }
-    public boolean deleteFileConfiguration(){
+
+    public boolean deleteFileConfiguration() {
         file = new File(dir, name + ".yml");
         if (file.exists()) {
             return file.delete();
@@ -118,28 +129,30 @@ public class Yaml {
         return false;
     }
 
-    public boolean existFileConfiguration(){
+    public boolean existFileConfiguration() {
         file = new File(dir, name + ".yml");
         return file.exists();
     }
+
     public void generateBackup() {
         file = new File(dir, "backup-" + name + ".yml");
         File dirFile = new File(dir);
         if (!dirFile.exists()) {
             if (dirFile.mkdir()) {
-                javaPlugin.getLogger().info("The directory '" + dir +"' has been created.");
+                javaPlugin.getLogger().info("The directory '" + dir + "' has been created.");
             }
         }
-        try{
+        try {
             if (file.createNewFile()) {
-                javaPlugin.getLogger().info("The file 'backup-" + name +".yml' has been created.");
+                javaPlugin.getLogger().info("The file 'backup-" + name + ".yml' has been created.");
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
         fileConfig.setDefaults(fileConfiguration);
     }
+
     public void saveWithOtherFileConfiguration(FileConfiguration fileConfiguration) {
         try {
             fileConfiguration.save(file);
@@ -149,21 +162,22 @@ public class Yaml {
     }
 
     public void sendMessage(CommandSender commandSender, String path) {
-        sendMessage(commandSender, path, new String[][] {});
+        sendMessage(commandSender, path, new String[][]{});
     }
+
     public void sendMessage(CommandSender commandSender, String path, String[][] replacements) {
         if (fileConfiguration == null) return;
         if (!fileConfiguration.contains(path)) return;
         if (fileConfiguration.isList(path)) {
             List<String> messages = fileConfiguration.getStringList(path);
-            for (String message:messages) {
+            for (String message : messages) {
                 if (commandSender instanceof Player && Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                     message = PlaceholderAPI.setPlaceholders((Player) commandSender, message);
                 }
                 if (fileConfiguration.contains("prefix") && fileConfiguration.isString("prefix")) {
                     message = message.replaceAll("%prefix%", Objects.requireNonNull(fileConfiguration.getString("prefix")));
                 }
-                for (String[] values:replacements){
+                for (String[] values : replacements) {
                     message = message.replaceAll(values[0], values[1]);
                 }
                 commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
@@ -177,13 +191,42 @@ public class Yaml {
                 if (fileConfiguration.contains("prefix") && fileConfiguration.isString("prefix")) {
                     message = message.replaceAll("%prefix%", Objects.requireNonNull(fileConfiguration.getString("prefix")));
                 }
-                for (String[] values:replacements){
+                for (String[] values : replacements) {
                     message = message.replaceAll(values[0], values[1]);
                 }
                 commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
         }
     }
+
+
+    public void sendSimpleMessage(CommandSender commandSender, Object message) {
+        sendSimpleMessage(commandSender, message, new String[][] {});
+    }
+    public void sendSimpleMessage(CommandSender commandSender, Object message, String[][] replacements) {
+        if (message.getClass().getSimpleName().equals("ArrayList")) {
+            List<String> messages = (List<String>) message;
+            for (String m:messages) {
+                if (commandSender instanceof Player && Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                    m = PlaceholderAPI.setPlaceholders((Player) commandSender, m);
+                }
+                for (String[] values:replacements){
+                    m = m.replaceAll(values[0], values[1]);
+                }
+                commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', m));
+            }
+        } else if (message.getClass().getSimpleName().equals("String")){
+            String m = (String) message;
+            if (commandSender instanceof Player && Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                m = PlaceholderAPI.setPlaceholders((Player) commandSender, m);
+            }
+            for (String[] values:replacements){
+                m = m.replaceAll(values[0], values[1]);
+            }
+            commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', m));
+        }
+    }
+
 
     // Default
     public void set(String path, Object value) { fileConfiguration.set(path, value); }
@@ -216,14 +259,26 @@ public class Yaml {
     public ItemStack getItemStack(String path) {
         Material material = Material.getMaterial(getString(path + ".material"));
         int amount = getInt(path + ".amount", 1);
+        // MaterialData
+        short data = -1;
+        if (contains(path + ".data")) {
+            if (isInt(path + ".data")) {
+                data = (short) getInt(path + ".data");
+            }
+        }
         if (material != null) {
-            ItemStack itemStack = new ItemStack(material, amount);
+            ItemStack itemStack;
+            if (data != -1) {
+                itemStack = new ItemStack(material, amount, data);
+            } else {
+                itemStack = new ItemStack(material, amount);
+            }
             ItemMeta itemMeta = itemStack.getItemMeta();
             if (itemMeta != null) {
                 // DisplayName
-                if (contains(path + ".display-name")) {
-                    if (isString(path + ".display-name")) {
-                        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getString(path + ".display-name")));
+                if (contains(path + ".name")) {
+                    if (isString(path + ".name")) {
+                        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getString(path + ".name")));
                     }
                 }
                 // Lore
@@ -237,16 +292,15 @@ public class Yaml {
                     }
                 }
                 // ItemFlag
-                if (contains(path + ".item-flag")) {
-                    if (fileConfiguration.isList(path + ".item-flag")) {
-                        List<String> flags = fileConfiguration.getStringList(path + ".item-flag");
+                if (contains(path + ".flags")) {
+                    if (fileConfiguration.isList(path + ".flags")) {
+                        List<String> flags = fileConfiguration.getStringList(path + ".flags");
                         for (String flag:flags) {
                             ItemFlag itemFlag = ItemFlag.valueOf(flag);
                             itemMeta.addItemFlags(itemFlag);
                         }
                     }
                 }
-
             }
             itemStack.setItemMeta(itemMeta);
             // Enchantments
@@ -257,6 +311,12 @@ public class Yaml {
                     if (enchantment != null) {
                         itemStack.addUnsafeEnchantment(enchantment, getInt(path + ".enchantments." + name));
                     }
+                }
+            }
+            // Durability
+            if (contains(path + ".durability")) {
+                if (isInt(path + ".durability")) {
+                    itemStack.setDurability((short) getInt(path + ".durability"));
                 }
             }
             return itemStack;
@@ -271,17 +331,17 @@ public class Yaml {
         }
     }
     public void setItemStack(String path, ItemStack item) {
-        fileConfiguration.set(path + ".material", item.getType().toString());
-        fileConfiguration.set(path + ".amount", item.getAmount());
+        set(path + ".material", item.getType().toString());
+        set(path + ".amount", item.getAmount());
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta != null) {
             // DisplayName
             if (itemMeta.hasDisplayName()) {
-                fileConfiguration.set(path + ".display-name", itemMeta.getDisplayName());
+                set(path + ".name", itemMeta.getDisplayName());
             }
             // Lore
             if (itemMeta.hasLore()) {
-                fileConfiguration.set(path + ".lore", itemMeta.getLore());
+                set(path + ".lore", itemMeta.getLore());
             }
             // ItemFlag
             if (!itemMeta.getItemFlags().isEmpty()) {
@@ -289,18 +349,20 @@ public class Yaml {
                 for (ItemFlag flag:itemMeta.getItemFlags()) {
                     flags.add(flag.toString());
                 }
-                fileConfiguration.set(path + ".item-flag", flags);
+                set(path + ".flags", flags);
             }
             // Enchantments
             if (!item.getEnchantments().isEmpty()) {
                 for (Enchantment enchantment:item.getEnchantments().keySet()) {
-                    fileConfiguration.set(path + ".enchantments." + enchantment.getName(), item.getEnchantments().get(enchantment));
+                    set(path + ".enchantments." + enchantment.getName(), item.getEnchantments().get(enchantment));
                 }
             }
+            set(path + ".data", item.getData().getData());
+            set(path + ".durability", item.getDurability());
         }
         saveFileConfiguration();
     }
-    public ItemStack replace(ItemStack itemStack, String[][] replacements) {
+    public static ItemStack replace(ItemStack itemStack, String[][] replacements) {
         ItemStack item = new ItemStack(itemStack);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -332,18 +394,26 @@ public class Yaml {
     }
 
     public Location getLocation(String path) {
-        String worldName = fileConfiguration.getString(path + ".world");
-        double x = fileConfiguration.getDouble(path + ".x");
-        double y = fileConfiguration.getDouble(path + ".y");
-        double z = fileConfiguration.getDouble(path + ".z");
-        return new Location(javaPlugin.getServer().getWorld(worldName), x, y, z);
+        String name = getString(path + ".world");
+        double x = getDouble(path + ".x");
+        double y = getDouble(path + ".y");
+        double z = getDouble(path + ".z");
+        float yaw = (float) getDouble(path + ".yaw");
+        float pitch = (float) getDouble(path + ".pitch");
+        World world = javaPlugin.getServer().getWorld(name);
+        if (world != null) {
+            return new Location(world, x, y, z, yaw, pitch);
+        }
+        return null;
     }
 
     public void setLocation(String path, Location location) {
-        fileConfiguration.set(path + ".world", location.getWorld().getName());
-        fileConfiguration.set(path + ".x", location.getX());
-        fileConfiguration.set(path + ".y", location.getY());
-        fileConfiguration.set(path + ".z", location.getZ());
+        set(path + ".world", location.getWorld().getName());
+        set(path + ".x", location.getX());
+        set(path + ".y", location.getY());
+        set(path + ".z", location.getZ());
+        set(path + ".yaw", location.getYaw());
+        set(path + ".pitch", location.getPitch());
     }
 
 }

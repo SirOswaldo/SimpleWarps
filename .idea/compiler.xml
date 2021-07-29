@@ -9,8 +9,5 @@
         <module name="SimpleWarps" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SimpleWarps" target="8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

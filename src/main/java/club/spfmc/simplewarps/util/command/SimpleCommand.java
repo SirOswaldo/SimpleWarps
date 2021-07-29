@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 SirOswaldo
+ * Copyright (C) 2021  SirOswaldo
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -40,13 +40,14 @@ public abstract class SimpleCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] arguments) {
         if (commandSender instanceof Player) {
-            return onPlayerExecute((Player) commandSender, command, arguments);
+            onPlayerExecute((Player) commandSender, command, arguments);
         } else {
-            return onConsoleExecute((ConsoleCommandSender) commandSender, command, arguments);
+            onConsoleExecute((ConsoleCommandSender) commandSender, command, arguments);
         }
+        return true;
     }
-    public boolean onPlayerExecute(Player player, Command command, String[] arguments) { return true;}
-    public boolean onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) { return true;}
+    public void onPlayerExecute(Player player, Command command, String[] arguments) {}
+    public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {}
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] arguments) {

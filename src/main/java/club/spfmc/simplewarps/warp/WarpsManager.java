@@ -1,77 +1,49 @@
+/*
+ *  Copyright (C) 2021 SirOswaldo
+ *
+ *      This program is free software: you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation, either version 3 of the License, or
+ *      (at your option) any later version.
+ *
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
+ *
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package club.spfmc.simplewarps.warp;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.util.yaml.Yaml;
-import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.util.HashMap;
 
 public class WarpsManager {
 
     private final SimpleWarps simpleWarps;
+    private final HashMap<String , Warp> warps = new HashMap<>();
 
     public WarpsManager(SimpleWarps simpleWarps) {
         this.simpleWarps = simpleWarps;
     }
 
-    private final HashMap<String, Warp> warps = new HashMap<>();
-
     public void loadWarps() {
-        File dir = new File(simpleWarps.getDataFolder() + File.separator + "warps");
-        if (dir.exists()) {
-            if (dir.isDirectory()) {
-                File[] files = dir.listFiles(new FileFilter() {
-                    @Override
-                    public boolean accept(File pathname) {
-                        return pathname.getName().endsWith(".yml");
-                    }
-                });
-                for (File file:files) {
-                    loadWarp(file.getName().replaceAll(".yml", ""));
-                }
-            }
-        }
+
     }
 
     public void loadWarp(String name) {
-        Yaml yaml = new Yaml(simpleWarps, "warps", name);
-        yaml.registerFileConfiguration();
-        int countdown = yaml.getInt("countdown");
-        Location location = yaml.getLocation("location");
-        Warp warp = new Warp(name, countdown, location);
-        warps.put(name, warp);
+
     }
 
-    public void unloadWarps() {
-        for (String name:warps.keySet()) {
-            unloadWarp(name);
-        }
+    public void saveWarps() {
+        
     }
 
-    public void unloadWarp(String name) {
-        saveWarp(name);
-        warps.remove(name);
-    }
+    public void saveWarp(String warp) {
 
-    public void saveWarp(String name) {
-        Warp warp = warps.get(name);
-        Yaml yaml = new Yaml(simpleWarps, "warps", name);
-        yaml.registerFileConfiguration();
-        yaml.set("countdown", warp.getCountdown());
-        yaml.setLocation("location", warp.getLocation());
-        yaml.saveFileConfiguration();
-    }
-
-    public void addWarp(Warp warp) {
-        warps.put(warp.getName(), warp);
-        saveWarp(warp.getName());
-    }
-
-    public Warp getWarp(String warp) {
-        return warps.get(warp);
     }
 
 }
