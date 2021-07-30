@@ -17,5 +17,91 @@
 
 package club.spfmc.simplewarps.warp;
 
+import org.bukkit.inventory.ItemStack;
+
 public class Warp {
+
+    private final String name;
+
+    // GUI
+    private boolean inGui;
+    private int slot;
+    private ItemStack previewItem;
+
+    // Location
+    private String world;
+    private double x, y, z;
+    private float yaw, pitch;
+
+    public Warp(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // GUI
+    public void setInGui(boolean inGui) {
+        this.inGui = inGui;
+    }
+    public boolean isInGui() {
+        return inGui;
+    }
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+    public int getSlot() {
+        return slot;
+    }
+    public void setPreviewItem(ItemStack previewItem) {
+        this.previewItem = previewItem;
+    }
+    public ItemStack getPreviewItem() {
+        return previewItem;
+    }
+
+    // Location
+    public void setWorld(String world) {
+        this.world = world;
+    }
+    public String getWorld() {
+        return world;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+    public double getX() {
+        return x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+    public double getY() {
+        return y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+    public double getZ() {
+        return z;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+    public float getYaw() {
+        return yaw;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
+    }
+    public float getPitch() {
+        return pitch;
+    }
+
 }

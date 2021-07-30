@@ -30,37 +30,67 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class SimplePagesInventory implements Listener {
+public abstract class SimplePagesInventoryDeprecated implements Listener {
 
     private static final HashMap<String, List<Object>> objects = new HashMap<>();
     private static final HashMap<String, Integer> page = new HashMap<>();
 
-    public void openInventory(Player player, List<Object> objects) {
-        SimplePagesInventory.objects.put(player.getName(), objects);
+    /**
+     *
+     * @param player
+     * @param objects
+     * @param rows Amount of rows min: 1 max: 4
+     */
+    public void openInventory(Player player, List<Object> objects, int rows) {
+        SimplePagesInventoryDeprecated.objects.put(player.getName(), objects);
         int page = 1;
-        SimplePagesInventory.page.put(player.getName(), page);
-        Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('&', getTitle()));
-        for (int i = 0; i < 27; i++) {
-            inventory.setItem(i, getPanel());
+        SimplePagesInventoryDeprecated.page.put(player.getName(), page);
+        int slots = 0;
+        if (!(rows > 0 && rows < 5)) {
+            rows = 1;
         }
-        inventory.setItem(9, getPrevPageButton());
-        inventory.setItem(17, getNextPageButton());
-        inventory.setItem(22, getCloseButton());
-        for (int i = 10; i < 17; i++) {
-            int realIndex = (page * 7 - 7) + (i - 9);
+        slots = (rows + 2) * 9;;
+        Inventory inventory = Bukkit.createInventory(null, slots, ChatColor.translateAlternateColorCodes('&', getTitle()));
+        // Set Panels
+        inventory.setItem(0, getPanel());
+        inventory.setItem(1, getPanel());
+        inventory.setItem(2, getPanel());
+        inventory.setItem(3, getPanel());
+        inventory.setItem(5, getPanel());
+        inventory.setItem(6, getPanel());
+        inventory.setItem(7, getPanel());
+        inventory.setItem(8, getPanel());
+        inventory.setItem(slots - 8, getPanel());
+        inventory.setItem(slots - 7, getPanel());
+        inventory.setItem(slots - 6, getPanel());
+        inventory.setItem(slots - 4, getPanel());
+        inventory.setItem(slots - 3, getPanel());
+        inventory.setItem(slots - 2, getPanel());
+        // Set Information
+        inventory.setItem(4, getInformation(objects));
+        // Set Prev Button
+        inventory.setItem(slots - 9, getPrevPageButton());
+        // Set Close Button
+        inventory.setItem(slots - 5, getCloseButton());
+        // Set Next Button
+        inventory.setItem(slots - 1, getNextPageButton());
+        // Set List
+        for (int index = 9; index < slots - 9; index++) {
+            int realIndex = ((page * (rows * 9)) - (rows * 9)) + (index - 8);
             int listIndex = realIndex - 1;
             if (objects.size() > listIndex) {
-                inventory.setItem(i, getFormattedItem(objects.get(listIndex)));
+                inventory.setItem(index, getFormattedItem(objects.get(listIndex)));
             } else {
-                inventory.setItem(i, getFormattedItem(null));
+                inventory.setItem(index, getFormattedItem(null));
             }
         }
+        // Open Inventory
         player.openInventory(inventory);
     }
 
     public abstract String getTitle();
-
     public abstract ItemStack getPanel();
+    public abstract ItemStack getInformation(List<Object> objects);
     public abstract ItemStack getFormattedItem(Object objects);
     public abstract ItemStack getNextPageButton();
     public abstract ItemStack getPrevPageButton();
@@ -72,11 +102,12 @@ public abstract class SimplePagesInventory implements Listener {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
             int slot = event.getRawSlot();
-            int page = SimplePagesInventory.page.get(player.getName());
-            if (slot > 9 && slot < 17) {
-                int realIndex = (page * 7 - 7) + (slot - 9);
+            int page = SimplePagesInventoryDeprecated.page.get(player.getName());
+            int rows = (event.getInventory().getSize() - 18) / 9;
+            if (slot > 8 && slot < (event.getInventory().getSize() - 9)) {
+                int realIndex = ((page * (rows * 9)) -  (rows * 9)) + (slot - 8);
                 int listIndex = realIndex - 1;
-                List<Object> objects = SimplePagesInventory.objects.get(player.getName());
+                List<Object> objects = SimplePagesInventoryDeprecated.objects.get(player.getName());
                 Object object = null;
                 if (objects.size() > listIndex) {
                     object = objects.get(listIndex);
@@ -98,39 +129,39 @@ public abstract class SimplePagesInventory implements Listener {
                         onShiftRightClick(player, object);
                         break;
                 }
-            } else if (slot == 9) {
+            } else if (slot == (event.getInventory().getSize() - 9)) {
                 if (page > 1) {
                     page = page - 1;
-                    SimplePagesInventory.page.put(player.getName(), page);
-                    List<Object> objects = SimplePagesInventory.objects.get(player.getName());
-                    for (int i = 10; i < 17; i++) {
-                        int realIndex = (page * 7 - 7) + (i - 9);
+                    SimplePagesInventoryDeprecated.page.put(player.getName(), page);
+                    List<Object> objects = SimplePagesInventoryDeprecated.objects.get(player.getName());
+                    for (int index = 9; index < (event.getInventory().getSize() - 9); index++) {
+                        int realIndex = ((page * (rows * 9)) - (rows * 9)) + (index - 8);
                         int listIndex = realIndex - 1;
                         if (objects.size() > listIndex) {
-                            event.getInventory().setItem(i, getFormattedItem(objects.get(listIndex)));
+                            event.getInventory().setItem(index, getFormattedItem(objects.get(listIndex)));
                         } else {
-                            event.getInventory().setItem(i, getFormattedItem(null));
+                            event.getInventory().setItem(index, getFormattedItem(null));
                         }
                     }
                 }
-            } else if (slot == 17) {
-                List<Object> objects = SimplePagesInventory.objects.get(player.getName());
-                if (objects.size() > (page * 7)) {
+            } else if (slot == (event.getInventory().getSize() - 1)) {
+                List<Object> objects = SimplePagesInventoryDeprecated.objects.get(player.getName());
+                if (objects.size() > (page * (rows * 9))) {
                     page = page + 1;
-                    SimplePagesInventory.page.put(player.getName(), page);
-                    for (int i = 10; i < 17; i++) {
-                        int realIndex = (page * 7 - 7) + (i - 9);
+                    SimplePagesInventoryDeprecated.page.put(player.getName(), page);
+                    for (int index = 9; index < (event.getInventory().getSize() - 9); index++) {
+                        int realIndex = ((page * (rows * 9)) - (rows * 9)) + (index - 8);
                         int listIndex = realIndex - 1;
                         if (objects.size() > listIndex) {
-                            event.getInventory().setItem(i, getFormattedItem(objects.get(listIndex)));
+                            event.getInventory().setItem(index, getFormattedItem(objects.get(listIndex)));
                         } else {
-                            event.getInventory().setItem(i, getFormattedItem(null));
+                            event.getInventory().setItem(index, getFormattedItem(null));
                         }
                     }
                 }
-            } else if (slot == 22) {
-                SimplePagesInventory.objects.remove(player.getName());
-                SimplePagesInventory.page.remove(player.getName());
+            } else if (slot == (event.getInventory().getSize() - 5)) {
+                SimplePagesInventoryDeprecated.objects.remove(player.getName());
+                SimplePagesInventoryDeprecated.page.remove(player.getName());
                 player.closeInventory();
             }
         }
@@ -147,8 +178,8 @@ public abstract class SimplePagesInventory implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         if (event.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', getTitle()))) {
-            SimplePagesInventory.objects.remove(player.getName());
-            SimplePagesInventory.page.remove(player.getName());
+            SimplePagesInventoryDeprecated.objects.remove(player.getName());
+            SimplePagesInventoryDeprecated.page.remove(player.getName());
         }
     }
 

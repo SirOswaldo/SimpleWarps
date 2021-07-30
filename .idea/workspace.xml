@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="74831908-36d4-4edf-a2f5-43b30a38b267" name="Default Changelist" comment="Start Project">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/CreateWarpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/ManageWarpsCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/WarpsCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuAction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/SimpleWarps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/SimpleWarps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimplePagesInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimplePagesInventoryDeprecated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/Warp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/Warp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/WarpsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/WarpsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/settings.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1vyJ567vvzP2S0Jtnmw2dvDwAEr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pc\IdeaProjects\SimpleWarps\src\main\java\club\spfmc\simplewarps" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="club.spfmc.simplewarps.util.inventory" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn package" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="SimpleWarps [clean,package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="74831908-36d4-4edf-a2f5-43b30a38b267" name="Default Changelist" comment="" />
+      <created>1627528208885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1627528208885</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Start Project">
+      <created>1627529599191</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1627529599191</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Start Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start Project" />
+  </component>
+</project>
