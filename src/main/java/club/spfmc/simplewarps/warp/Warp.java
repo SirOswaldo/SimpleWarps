@@ -33,6 +33,11 @@ public class Warp {
     private double x, y, z;
     private float yaw, pitch;
 
+    // Permission
+    private String permission;
+    // Cost
+    private double cost;
+
     public Warp(String name) {
         this.name = name;
     }
@@ -102,6 +107,20 @@ public class Warp {
     }
     public float getPitch() {
         return pitch;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
 }

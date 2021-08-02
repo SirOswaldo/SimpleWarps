@@ -15,41 +15,58 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.commands;
+package club.spfmc.simplewarps.inventories;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.inventories.WarpsInventory;
-import club.spfmc.simplewarps.util.command.SimpleCommand;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
-import club.spfmc.simplewarps.util.yaml.Yaml;
+import club.spfmc.simplewarps.util.inventory.menu.inventories.ConfirmInventory;
 import club.spfmc.simplewarps.warp.Warp;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
-public class WarpsCommand extends SimpleCommand {
+public class DeleteWarpConfirmInventory extends ConfirmInventory {
 
     private final SimpleWarps simpleWarps;
+    private final Warp warp;
 
-    public WarpsCommand(SimpleWarps simpleWarps) {
-        super(simpleWarps, "Warps");
+    public DeleteWarpConfirmInventory(SimpleWarps simpleWarps, Warp warp) {
         this.simpleWarps = simpleWarps;
+        this.warp = warp;
     }
 
     @Override
-    public void onPlayerExecute(Player player, String[] arguments) {
-        simpleWarps.getMenuInventoryManager().openInventory(player, new WarpsInventory(simpleWarps));
+    public String getTitle() {
+        return simpleWarps.getSettings().getString("inventory.");
     }
 
     @Override
-    public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {
-        Yaml messages = simpleWarps.getMessages();
-        messages.sendMessage(console, "warps.isConsole");
+    public ItemStack getPanel() {
+        return null;
     }
+
+    @Override
+    public ItemStack getInformation() {
+        return null;
+    }
+
+    @Override
+    public ItemStack getAccept() {
+        return null;
+    }
+
+    @Override
+    public ItemStack getCancel() {
+        return null;
+    }
+
+    //todo Crear metodo de eliminar warp
+    @Override
+    public void onAccept() {
+        //simpleWarps.getWarpsManager().
+    }
+
+    //todo Terminar este menu
+    @Override
+    public void onCancel() {
+
+    }
+
 }

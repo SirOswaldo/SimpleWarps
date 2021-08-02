@@ -1,11 +1,9 @@
 package club.spfmc.simplewarps;
 
-import club.spfmc.simplewarps.commands.CreateWarpCommand;
-import club.spfmc.simplewarps.commands.ManageWarpsCommand;
-import club.spfmc.simplewarps.commands.SimpleWarpsCommand;
-import club.spfmc.simplewarps.commands.WarpsCommand;
+import club.spfmc.simplewarps.commands.*;
 import club.spfmc.simplewarps.util.bStats.Metrics;
-import club.spfmc.simplewarps.util.inventory.menu.SimpleMenuInventory;
+import club.spfmc.simplewarps.util.chatimput.ChatInputManager;
+import club.spfmc.simplewarps.util.inventory.menu.MenuInventoryManager;
 import club.spfmc.simplewarps.util.inventory.pages.PagesInventoryManager;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.WarpsManager;
@@ -19,15 +17,19 @@ public class SimpleWarps extends JavaPlugin {
 
     private final WarpsManager warpsManager = new WarpsManager(this);
 
-    private SimpleMenuInventory simpleMenuInventory = new SimpleMenuInventory();
-    public SimpleMenuInventory getSimpleMenuInventory() {
-        return simpleMenuInventory;
+    private MenuInventoryManager menuInventoryManager = new MenuInventoryManager();
+    public MenuInventoryManager getMenuInventoryManager() {
+        return menuInventoryManager;
     }
-
 
     private final PagesInventoryManager pagesInventoryManager = new PagesInventoryManager();
     public PagesInventoryManager getPagesInventoryManager() {
         return pagesInventoryManager;
+    }
+
+    private final ChatInputManager chatInputManager = new ChatInputManager();
+    public ChatInputManager getChatInputManager() {
+        return chatInputManager;
     }
 
     @Override
@@ -40,13 +42,13 @@ public class SimpleWarps extends JavaPlugin {
             return warps;
         }));
         // Yaml Files
-        settings.registerFileConfiguration();
-        messages.registerFileConfiguration();
+        registerFiles();
         // Load Warps
         warpsManager.loadWarps();
         // Registers
         registerListeners();
         registerCommands();
+        registerFiles();
     }
 
     @Override
@@ -54,10 +56,28 @@ public class SimpleWarps extends JavaPlugin {
 
     }
 
+    private void registerFiles() {
+        messages.reloadFileConfiguration();
+        if (!messages.getString("version").equals(getDescription().getVersion())) {
+            Yaml backup = new Yaml(this, "backup-settings");
+            backup.registerFileConfiguration();
+            backup.saveWithOtherFileConfiguration(messages.getFileConfiguration());
+            messages.deleteFileConfiguration();
+        }
+        settings.reloadFileConfiguration();
+        if (!settings.getString("version").equals(getDescription().getVersion())) {
+            Yaml backup = new Yaml(this, "backup-settings");
+            backup.registerFileConfiguration();
+            backup.saveWithOtherFileConfiguration(settings.getFileConfiguration());
+            settings.deleteFileConfiguration();
+        }
+    }
+
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(pagesInventoryManager, this);
-        pluginManager.registerEvents(simpleMenuInventory, this);
+        pluginManager.registerEvents(menuInventoryManager, this);
+        pluginManager.registerEvents(chatInputManager, this);
     }
 
     private void registerCommands() {
@@ -65,6 +85,7 @@ public class SimpleWarps extends JavaPlugin {
         new ManageWarpsCommand(this);
         new CreateWarpCommand(this);
         new WarpsCommand(this);
+        new EditWarpCommand(this);
     }
 
     public Yaml getSettings() {

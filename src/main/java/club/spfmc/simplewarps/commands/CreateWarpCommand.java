@@ -36,7 +36,7 @@ public class CreateWarpCommand extends SimpleCommand {
     }
 
     @Override
-    public void onPlayerExecute(Player player, Command command, String[] arguments) {
+    public void onPlayerExecute(Player player, String[] arguments) {
         if (arguments.length > 0) {
             String name = arguments[0];
             Location location = player.getLocation();
@@ -50,6 +50,8 @@ public class CreateWarpCommand extends SimpleCommand {
             warp.setZ(location.getZ());
             warp.setYaw(location.getYaw());
             warp.setPitch(location.getPitch());
+            warp.setPermission("simple.teleport.warp." + name);
+            warp.setCost(0.0);
             simpleWarps.getWarpsManager().addWarp(warp);
             player.sendMessage("Warp creado");
         }

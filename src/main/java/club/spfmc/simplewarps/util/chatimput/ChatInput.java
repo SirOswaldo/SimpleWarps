@@ -19,18 +19,19 @@ package club.spfmc.simplewarps.util.chatimput;
 
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class ChatInput {
 
-    private final UUID uuid;
+    private HashMap<String, Object> objects = new HashMap<>();
 
-    public ChatInput(UUID uuid) {
-        this.uuid = uuid;
+    public ChatInput(HashMap<String, Object> objects) {
+        this.objects = objects;
     }
 
-    public UUID getUniqueId() {
-        return uuid;
+    public HashMap<String, Object> getObjects() {
+        return objects;
     }
 
     public abstract boolean onChatInput(Player player, String input);

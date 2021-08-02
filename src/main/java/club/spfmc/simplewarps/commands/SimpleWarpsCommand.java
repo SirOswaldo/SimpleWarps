@@ -37,7 +37,7 @@ public class SimpleWarpsCommand extends SimpleCommand {
     }
 
     @Override
-    public void onPlayerExecute(Player player, Command command, String[] arguments) {
+    public void onPlayerExecute(Player player, String[] arguments) {
         Yaml messages = simpleWarps.getMessages();
         if (player.hasPermission("simple.admin.warps")) {
             if (arguments.length > 0) {

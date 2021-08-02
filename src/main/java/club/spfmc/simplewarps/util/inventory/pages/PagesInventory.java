@@ -54,8 +54,6 @@ public abstract class PagesInventory {
         return objects;
     }
 
-
-
     public abstract ItemStack getListedItem(Object object);
     public abstract ItemStack getPanel();
     public abstract ItemStack getInformation();
@@ -63,13 +61,10 @@ public abstract class PagesInventory {
     public abstract ItemStack getNext();
     public abstract ItemStack getClose();
 
-
-
     public void onLeftClick(Player player, Object object) {};
     public void onRightClick(Player player, Object object) {};
     public void onMiddleClick(Player player, Object object) {};
     public void onShiftRightClick(Player player, Object object) {};
     public void onShiftLeftClick(Player player, Object object) {};
-
 
 }

@@ -17,27 +17,22 @@
 
 package club.spfmc.simplewarps.util.inventory.menu;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import java.util.HashMap;
 
-public abstract class SimpleMenuAction {
+public abstract class MenuInventory {
 
-    private final int slot;
+    private final HashMap<Integer, Item> items = new HashMap<>();
 
-    public SimpleMenuAction(int slot) {
-        this.slot = slot;
+    public abstract String getTitle();
+
+    public abstract int getRows();
+
+    public HashMap<Integer, Item> getItems() {
+        return items;
     }
 
-    public int getSlot() {
-        return slot;
+    public void addMenuAction(int slot, Item item) {
+        items.put(slot, item);
     }
-
-    public abstract ItemStack getItem();
-
-    public void onLeftClick(Player player) {}
-    public void onRightClick(Player player) {}
-    public void onMiddleClick(Player player) {}
-    public void onShiftLeftClick(Player player) {}
-    public void onShiftRightClick(Player player) {}
 
 }

@@ -42,7 +42,7 @@ public class ManageWarpsCommand extends SimpleCommand {
     }
 
     @Override
-    public void onPlayerExecute(Player player, Command command, String[] arguments) {
+    public void onPlayerExecute(Player player, String[] arguments) {
         Yaml messages = simpleWarps.getMessages();
         if (player.hasPermission("simple.manage.warps")) {
             Yaml settings = simpleWarps.getSettings();
@@ -58,6 +58,15 @@ public class ManageWarpsCommand extends SimpleCommand {
                         World world = simpleWarps.getServer().getWorld(warp.getWorld());
                         Location location = new Location(world, warp.getX(), warp.getY(), warp.getZ(), warp.getYaw(), warp.getPitch());
                         player.teleport(location);
+                    }
+                }
+
+                @Override
+                public void onRightClick(Player player, Object object) {
+                    if (object != null) {
+                        player.closeInventory();
+                        Warp warp = (Warp) object;
+                        simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
                     }
                 }
 

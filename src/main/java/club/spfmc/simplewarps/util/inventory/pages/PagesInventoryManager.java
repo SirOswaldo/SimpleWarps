@@ -149,7 +149,10 @@ public class PagesInventoryManager implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         if (PagesInventoryManager.inventories.containsKey(player.getName())) {
-            PagesInventoryManager.inventories.remove(player.getName());
+            PagesInventory pagesInventory = PagesInventoryManager.inventories.get(player.getName());
+            if (event.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', pagesInventory.getTitle()))) {
+                PagesInventoryManager.inventories.remove(player.getName());
+            }
         }
     }
 

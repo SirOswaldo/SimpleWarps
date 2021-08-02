@@ -30,61 +30,42 @@ import java.util.UUID;
 
 public class ChatInputManager implements Listener {
 
-    public ChatInputManager(JavaPlugin javaPlugin) {
-        javaPlugin.getServer().getPluginManager().registerEvents(this, javaPlugin);
-    }
+    private static final HashMap<String, ChatInput> inputs = new HashMap<>();
 
-    private final HashMap<UUID, ChatInput> chatInputs = new HashMap<>();
-
-    public void addChatInput(ChatInput chatInput) {
-        chatInputs.put(chatInput.getUniqueId(), chatInput);
+    public void addChatInput(Player player, ChatInput input) {
+        inputs.put(player.getName(), input);
     }
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         // Getting Player
         Player player = event.getPlayer();
-        // Getting UUID
-        UUID uuid = player.getUniqueId();
         // If exist Chat Input from player
-        if (chatInputs.containsKey(uuid)) {
+        if (inputs.containsKey(player.getName())) {
             // Cancel chat event
             event.setCancelled(true);
             // Getting the Chat Input
-            ChatInput chatInput = chatInputs.get(uuid);
+            ChatInput chatInput = inputs.get(player.getName());
             // If onChatInput method return true
             if (chatInput.onChatInput(player, event.getMessage())) {
                 // Removing Chat Input
-                chatInputs.remove(uuid);
+                inputs.remove(player.getName());
             }
         }
     }
 
     @EventHandler
     public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
-        // Getting Player
-        Player player = event.getPlayer();
-        // Getting UUID
-        UUID uuid = player.getUniqueId();
-        // If exist Chat Input from player
-        if (chatInputs.containsKey(uuid)) {
-            // Getting the Chat Input
-            ChatInput chatInput = chatInputs.get(uuid);
-            // Call onPlayerSneak method
-            chatInput.onPlayerSneak(player);
-            // Removing Chat Input
-            chatInputs.remove(uuid);
+        if (inputs.containsKey(event.getPlayer().getName())) {
+            ChatInput chatInput = inputs.get(event.getPlayer().getName());
+            chatInput.onPlayerSneak(event.getPlayer());
+            inputs.remove(event.getPlayer().getName());
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        // Getting Player
-        Player player = event.getPlayer();
-        // Getting UUID
-        UUID uuid = player.getUniqueId();
-        // Removing Chat Input from player, if exist
-        chatInputs.remove(uuid);
+        inputs.remove(event.getPlayer().getName());
     }
 
 }

@@ -1,6 +1,94 @@
+version: "1.0"
+teleport:
+  countdown: 10
+  messages:
+    10: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    5: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    4: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    3: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    2: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    1: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+  sounds:
+    10: "NOTE_PLING"
+    5: "NOTE_PLING"
+    4: "NOTE_PLING"
+    3: "NOTE_PLING"
+    2: "NOTE_PLING"
+    1: "NOTE_PLING"
+    0: "ENDERMAN_TELEPORT"
 inventory:
   warps:
+    rows: 6
     title: "Warps"
+    noPermissionSound: "VILLAGER_NO"
+  editWarp:
+    title: "Editing Warp: %warp_name%"
+    items:
+      panel:
+        material: "STAINED_GLASS_PANE"
+        data: 1
+      visible:
+        material: "CHEST"
+        name: "&6Visible in GUI"
+        lore:
+          - "&7"
+          - "&3Estatus&b: %status%"
+          - "&7"
+          - "&7Left Click to Toggle Status"
+      preview:
+        material: "CHEST"
+        name: "&6Change Preview Item in Gui"
+        lore:
+          - ""
+      position:
+        material: "CHEST"
+        name: "&6Change Position in Gui"
+        lore:
+          - "&7"
+          - "&6Position&e: &f%warp_position%"
+      location:
+        material: "ENDER_PEARL"
+        name: "&6Change Location"
+        lore:
+          - "&7"
+          - "&3Location&b:"
+          - "  &6World&e: &f%warp_world%"
+          - "  &6X&e: &f%warp_x%"
+          - "  &6Y&e: &f%warp_y%"
+          - "  &6Z&e: &f%warp_z%"
+          - "  &6Yaw&e: &f%warp_yaw%"
+          - "  &6Pitch&e: &f%warp_pitch%"
+          - "&7"
+          - "&7Left Click to Change"
+      permission:
+        material: "NAME_TAG"
+        name: "&6Permission"
+        lore:
+          - "&7"
+          - "&6Permission&e: &f%warp_permission%"
+          - "&7"
+          - "&7Left Click to Change"
+          - "&7Right Click to Reset"
+      cost:
+        material: "DOUBLE_PLANT"
+        name: "&6Cost"
+        lore:
+          - "&7"
+          - "&6Cost&e: &f%warp_cost%"
+          - "&7"
+          - "&7Left Click to change cost of use."
+      close:
+        material: "BARRIER"
+        name: "&cClose"
+  selectPosition:
+    title: "Select new position"
+    items:
+      free:
+        material: "STAINED_GLASS_PANE"
+        data: 5
+      blocked:
+        material: "STAINED_GLASS_PANE"
+        data: 14
   manageWarps:
     title: "Manage Warp Menu"
     rows: 1

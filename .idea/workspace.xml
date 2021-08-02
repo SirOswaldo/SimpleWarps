@@ -4,22 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74831908-36d4-4edf-a2f5-43b30a38b267" name="Default Changelist" comment="Start Project">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/CreateWarpCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/ManageWarpsCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/WarpsCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuInventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventoryManager.java" afterDir="false" />
+    <list default="true" id="74831908-36d4-4edf-a2f5-43b30a38b267" name="Default Changelist" comment="Inventory API Completed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/EditWarpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inputs/CostInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inputs/PermissionInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inventories/DeleteWarpConfirmInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inventories/EditWarpInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inventories/SelectPositionInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/inventories/WarpsInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/tasks/TeleportTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/MenuInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/inventories/ConfirmInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/SimpleWarps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/SimpleWarps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimplePagesInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimplePagesInventoryDeprecated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/CreateWarpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/CreateWarpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/ManageWarpsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/ManageWarpsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/SimpleWarpsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/SimpleWarpsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/WarpsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/commands/WarpsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/chatimput/ChatInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/chatimput/ChatInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/chatimput/ChatInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/chatimput/ChatInputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/command/SimpleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/command/SimpleCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimpleConfirmInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimpleInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/SimplePagesInventoryDeprecated.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/SimpleMenuInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/menu/MenuInventoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/inventory/pages/PagesInventoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/yaml/Yaml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/util/yaml/Yaml.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/Warp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/Warp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/WarpsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/warp/WarpsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/messages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/settings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/messages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/messages.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/settings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/settings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,11 +69,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/club/spfmc/simplewarps/tasks" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pc\IdeaProjects\SimpleWarps\src\main\java\club\spfmc\simplewarps\tasks" />
       <recent name="C:\Users\Pc\IdeaProjects\SimpleWarps\src\main\java\club\spfmc\simplewarps" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -62,7 +86,14 @@
       <command value="mvn package" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Maven.SimpleWarps [clean,package]">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="club.spfmc.simplewarps.Pruebas" />
+      <module name="SimpleWarps" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SimpleWarps [clean,package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -89,6 +120,10 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Maven.SimpleWarps [clean,package]" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -106,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627529599191</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Inventory API Completed">
+      <created>1627625189631</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1627625189631</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -123,6 +165,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Start Project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start Project" />
+    <MESSAGE value="Inventory API Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Inventory API Completed" />
   </component>
 </project>

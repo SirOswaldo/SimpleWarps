@@ -57,6 +57,10 @@ public class WarpsManager {
         double z = 0.0;
         float yaw = 0;
         float pitch = 0;
+        // Permission
+        String permission = "simple.teleport.warp." + name;
+        // Cost
+        double cost = 0.0;
 
         // GUI
         if (yaml.contains("gui.enable") && yaml.isBoolean("gui.enable")) {
@@ -120,6 +124,20 @@ public class WarpsManager {
             simpleWarps.getLogger().info("The warp " + name + "has no loaded because the 'location.pitch' no exist or is invalid");
             return;
         }
+        // Permission
+        if (yaml.contains("permission") && yaml.isString("permission")) {
+            permission = yaml.getString("permission");
+        } else {
+            simpleWarps.getLogger().info("The warp " + name + "has no loaded because the 'permission' no exist or is invalid");
+            return;
+        }
+        // Cost
+        if (yaml.contains("cost") && yaml.isDouble("cost")) {
+            cost = yaml.getDouble("cost");
+        } else {
+            simpleWarps.getLogger().info("The warp " + name + "has no loaded because the 'cost' no exist or is invalid");
+            return;
+        }
         // Warp
         Warp warp = new Warp(name);
         // GUI
@@ -133,6 +151,10 @@ public class WarpsManager {
         warp.setZ(z);
         warp.setYaw(yaw);
         warp.setPitch(pitch);
+        // Permission
+        warp.setPermission(permission);
+        // Cost
+        warp.setCost(cost);
         warps.put(name, warp);
     }
 
@@ -159,6 +181,8 @@ public class WarpsManager {
         yaml.set("location.z", warp.getZ());
         yaml.set("location.yaw", warp.getYaw());
         yaml.set("location.pitch", warp.getPitch());
+        yaml.set("permission", warp.getPermission());
+        yaml.set("cost", warp.getCost());
         yaml.saveFileConfiguration();
     }
 
@@ -174,6 +198,11 @@ public class WarpsManager {
         }
         return warpsList;
     }
+
+    public List<String> getWarpsNames() {
+        return new ArrayList<>(warps.keySet());
+    }
+
 
     public Warp getWarp(String name) {
         return warps.get(name);

@@ -18,38 +18,46 @@
 package club.spfmc.simplewarps.commands;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.inventories.WarpsInventory;
+import club.spfmc.simplewarps.inventories.EditWarpInventory;
 import club.spfmc.simplewarps.util.command.SimpleCommand;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.Warp;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
-public class WarpsCommand extends SimpleCommand {
+public class EditWarpCommand extends SimpleCommand {
 
     private final SimpleWarps simpleWarps;
 
-    public WarpsCommand(SimpleWarps simpleWarps) {
-        super(simpleWarps, "Warps");
+    public EditWarpCommand(SimpleWarps simpleWarps) {
+        super(simpleWarps, "EditWarp");
         this.simpleWarps = simpleWarps;
     }
 
     @Override
     public void onPlayerExecute(Player player, String[] arguments) {
-        simpleWarps.getMenuInventoryManager().openInventory(player, new WarpsInventory(simpleWarps));
+        Yaml messages = simpleWarps.getMessages();
+        if (player.hasPermission("simple.edit.warp")) {
+            if (arguments.length > 0) {
+                String name = arguments[0];
+                if (simpleWarps.getWarpsManager().getWarpsNames().contains(name)) {
+                    Warp warp = simpleWarps.getWarpsManager().getWarp(arguments[0]);
+                    simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp));
+                } else {
+                    messages.sendMessage(player, "editWarp.invalidName", new String[][] {{"%warp_name%", arguments[0]}});
+                }
+            } else {
+                messages.sendMessage(player, "editWarp.emptyName");
+            }
+        } else {
+            messages.sendMessage(player, "editWarp.noPermission");
+        }
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {
-        Yaml messages = simpleWarps.getMessages();
-        messages.sendMessage(console, "warps.isConsole");
+        simpleWarps.getMessages().sendMessage(console, "editWarp.isConsole");
     }
+
 }

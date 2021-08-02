@@ -40,13 +40,13 @@ public abstract class SimpleCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] arguments) {
         if (commandSender instanceof Player) {
-            onPlayerExecute((Player) commandSender, command, arguments);
+            onPlayerExecute((Player) commandSender, arguments);
         } else {
             onConsoleExecute((ConsoleCommandSender) commandSender, command, arguments);
         }
         return true;
     }
-    public void onPlayerExecute(Player player, Command command, String[] arguments) {}
+    public void onPlayerExecute(Player player, String[] arguments) {}
     public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {}
 
     @Override

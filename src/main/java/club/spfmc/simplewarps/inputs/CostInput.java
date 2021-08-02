@@ -15,41 +15,42 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.commands;
+package club.spfmc.simplewarps.inputs;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.inventories.WarpsInventory;
-import club.spfmc.simplewarps.util.command.SimpleCommand;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
+import club.spfmc.simplewarps.util.chatimput.ChatInput;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.Warp;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-
-public class WarpsCommand extends SimpleCommand {
+public class CostInput extends ChatInput {
 
     private final SimpleWarps simpleWarps;
+    private final Warp warp;
 
-    public WarpsCommand(SimpleWarps simpleWarps) {
-        super(simpleWarps, "Warps");
+    public CostInput(SimpleWarps simpleWarps, Warp warp) {
+        super(null);
         this.simpleWarps = simpleWarps;
+        this.warp = warp;
     }
 
     @Override
-    public void onPlayerExecute(Player player, String[] arguments) {
-        simpleWarps.getMenuInventoryManager().openInventory(player, new WarpsInventory(simpleWarps));
-    }
-
-    @Override
-    public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {
+    public boolean onChatInput(Player player, String input) {
         Yaml messages = simpleWarps.getMessages();
-        messages.sendMessage(console, "warps.isConsole");
+        try {
+            int cost = Integer.parseInt(input);
+            warp.setCost(cost);
+            simpleWarps.getWarpsManager().saveWarp(warp.getName());
+            simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+        } catch (NumberFormatException e) {
+            messages.sendMessage(player, "editWarp.cost.invalidCost");
+        }
+        return false;
     }
+
+    @Override
+    public void onPlayerSneak(Player player) {
+        simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+    }
+
 }

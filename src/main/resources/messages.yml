@@ -1,3 +1,4 @@
+version: "1.0"
 prefix: "&6&lSimple&e&lWarps &7»"
 enabled: "&aENABLED"
 disabled: "&cDISABLED"
@@ -18,7 +19,25 @@ createWarp:
 deleteWarp:
   noPermission: ""
 warp:
-  noPermission: ""
-  noPermissionWarp: ""
+  noPermission: "%prefix% &fYou do not have permissions."
+  noPermissionWarp: "%prefix% &fYou do not have permissions to teleport to &9%warp%&f."
+  invalidWorld: "%prefix% &fThe world &9%world%&f no exist in the warp &9%warp%&f. &cCONTACT AN ADMIN"
+  teleported: "%prefix% &fYou has teleported to: &9%warp%&f."
 warps:
-  noPermision: ""
+  isConsole: "%prefix% &fThis command only can execute by players."
+  noPermision: "%prefix% &fYou do not have permissions."
+editWarp:
+  isConsole: "%prefix% &fThis command only can execute by players."
+  noPermission: "%prefix% &fYou do not have permissions."
+  emptyName: "%prefix% &fThe warp name is empty."
+  invalidName: "%prefix% &fThe warp &9%warp_name%&f no is valid or no exist."
+  permission:
+    enterNewPermission:
+      - "%prefix% &fEnter the new permission in the chat."
+      - "&fPress Shift to cancel."
+    containSpace: "%prefix% &fThe new permission contain spaces, try again."
+  cost:
+    enterNewCost:
+      - "%prefix% &fEnter the new cost in the chat."
+      - "&fPress Shift to cancel."
+    invalidCost: "%prefix% &fThe new cost is invalid, try again."

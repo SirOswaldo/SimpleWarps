@@ -83,23 +83,28 @@ public class Yaml {
             File dirFile = new File(dir);
             if (!dirFile.exists()) {
                 if (dirFile.mkdir()) {
-                    javaPlugin.getLogger().info("The directory '" + dir + "' has been created.");
+                    javaPlugin.getLogger().info("The directory '" + dir +"' has been created.");
                 }
             }
-            try {
-                if (file.createNewFile()) {
-                    javaPlugin.getLogger().info("The file '" + name + ".yml' has been created.");
+            try{
+                if(!file.exists()){
+                    if (file.createNewFile()) {
+                        javaPlugin.getLogger().info("The file '" + name +".yml' has been created.");
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e){}
         }
-        fileConfiguration = YamlConfiguration.loadConfiguration(file);
-        if (javaPlugin.getResource(name + ".yml") != null) {
-            Reader defConfigStream = new InputStreamReader(Objects.requireNonNull(javaPlugin.getResource(name + ".yml")), StandardCharsets.UTF_8);
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-            fileConfiguration.setDefaults(defConfig);
-            saveFileConfiguration();
+        try{
+            fileConfiguration = YamlConfiguration.loadConfiguration(file);
+        }catch (Exception e){}
+        if(file.length() == 0){
+            if (javaPlugin.getResource(name + ".yml") != null){
+                Reader defConfigStream = new InputStreamReader(Objects.requireNonNull(javaPlugin.getResource(name + ".yml")), StandardCharsets.UTF_8);
+                YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+                fileConfiguration.setDefaults(defConfig);
+                saveFileConfiguration();
+                saveWithOtherFileConfiguration(defConfig);
+            }
         }
     }
 
@@ -135,22 +140,7 @@ public class Yaml {
     }
 
     public void generateBackup() {
-        file = new File(dir, "backup-" + name + ".yml");
-        File dirFile = new File(dir);
-        if (!dirFile.exists()) {
-            if (dirFile.mkdir()) {
-                javaPlugin.getLogger().info("The directory '" + dir + "' has been created.");
-            }
-        }
-        try {
-            if (file.createNewFile()) {
-                javaPlugin.getLogger().info("The file 'backup-" + name + ".yml' has been created.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FileConfiguration fileConfig = YamlConfiguration.loadConfiguration(file);
-        fileConfig.setDefaults(fileConfiguration);
+
     }
 
     public void saveWithOtherFileConfiguration(FileConfiguration fileConfiguration) {

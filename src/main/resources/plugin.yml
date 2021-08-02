@@ -18,6 +18,8 @@ commands:
     description: Teleport to specific warp
   Warps:
     description: Open Warps GUI
+  EditWarp:
+    description: Edit Warp
 permissions:
   simple.admin.warps:
     description: Manage this plugin.
