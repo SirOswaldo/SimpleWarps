@@ -24,16 +24,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
 
 public class MenuInventoryManager implements Listener {
 
-    private final static HashMap<String, MenuInventory> inventories = new HashMap<>();
+    private final HashMap<String, MenuInventory> inventories = new HashMap<>();
 
     public void openInventory(Player player, MenuInventory menuInventory) {
-        MenuInventoryManager.inventories.put(player.getName(), menuInventory);
+        inventories.put(player.getName(), menuInventory);
         Inventory inventory = Bukkit.createInventory(null, menuInventory.getRows() * 9, ChatColor.translateAlternateColorCodes('&', menuInventory.getTitle()));
         for (int slot:menuInventory.getItems().keySet()) {
             Item action = menuInventory.getItems().get(slot);
@@ -48,8 +49,8 @@ public class MenuInventoryManager implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (MenuInventoryManager.inventories.containsKey(player.getName())) {
-            MenuInventory menuInventory = MenuInventoryManager.inventories.get(player.getName());
+        if (inventories.containsKey(player.getName())) {
+            MenuInventory menuInventory = inventories.get(player.getName());
             if (event.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', menuInventory.getTitle()))) {
                 event.setCancelled(true);
                 int slot = event.getRawSlot();
@@ -81,12 +82,17 @@ public class MenuInventoryManager implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
-        if (MenuInventoryManager.inventories.containsKey(player.getName())) {
-            MenuInventory menuInventory = MenuInventoryManager.inventories.get(player.getName());
+        if (inventories.containsKey(player.getName())) {
+            MenuInventory menuInventory = inventories.get(player.getName());
             if (event.getView().getTitle().equals(ChatColor.translateAlternateColorCodes('&', menuInventory.getTitle()))) {
-                MenuInventoryManager.inventories.remove(player.getName());
+                inventories.remove(player.getName());
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        inventories.remove(event.getPlayer().getName());
     }
 
 }

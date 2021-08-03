@@ -21,7 +21,6 @@ import club.spfmc.simplewarps.SimpleWarps;
 import club.spfmc.simplewarps.inputs.CostInput;
 import club.spfmc.simplewarps.inputs.ItemInput;
 import club.spfmc.simplewarps.inputs.PermissionInput;
-import club.spfmc.simplewarps.util.chatimput.ChatInput;
 import club.spfmc.simplewarps.util.inventory.Item;
 import club.spfmc.simplewarps.util.inventory.MenuInventory;
 import club.spfmc.simplewarps.util.yaml.Yaml;
@@ -90,7 +89,7 @@ public class EditWarpInventory extends MenuInventory {
             @Override
             public void onLeftClick(Player player) {
                 player.closeInventory();
-                simpleWarps.getDropInputManager().addInput(player, new ItemInput(simpleWarps, warp, from));
+                simpleWarps.getInputManager().addDropInput(player, new ItemInput(simpleWarps, warp, from));
                 messages.sendMessage(player, "editWarp.previewItem.enterNewPreviewItem");
             }
         });
@@ -139,8 +138,7 @@ public class EditWarpInventory extends MenuInventory {
             @Override
             public void onLeftClick(Player player) {
                 player.closeInventory();
-                ChatInput input = new PermissionInput(simpleWarps, warp);
-                simpleWarps.getChatInputManager().addChatInput(player, input);
+                simpleWarps.getInputManager().addChatInput(player, new PermissionInput(simpleWarps, warp, from));
                 messages.sendMessage(player, "editWarp.permission.enterNewPermission");
             }
 
@@ -162,8 +160,7 @@ public class EditWarpInventory extends MenuInventory {
             @Override
             public void onLeftClick(Player player) {
                 player.closeInventory();
-                ChatInput input = new CostInput(simpleWarps, warp);
-                simpleWarps.getChatInputManager().addChatInput(player, input);
+                simpleWarps.getInputManager().addChatInput(player, new CostInput(simpleWarps, warp, from));
                 messages.sendMessage(player, "editWarp.cost.enterNewCost");
             }
         });

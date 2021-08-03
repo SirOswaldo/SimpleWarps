@@ -30,7 +30,7 @@ import java.util.List;
 public class DeleteWarpConfirmInventory extends ConfirmInventory {
 
     private final SimpleWarps simpleWarps;
-    private String from;
+    private final String from;
 
     public DeleteWarpConfirmInventory(SimpleWarps simpleWarps, Warp warp, String from) {
         super(warp);

@@ -22,7 +22,6 @@ import club.spfmc.simplewarps.util.command.SimpleCommand;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

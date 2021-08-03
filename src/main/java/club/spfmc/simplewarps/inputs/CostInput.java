@@ -18,20 +18,22 @@
 package club.spfmc.simplewarps.inputs;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.util.chatimput.ChatInput;
+import club.spfmc.simplewarps.inventories.EditWarpInventory;
+import club.spfmc.simplewarps.util.input.inputs.ChatInput;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.entity.Player;
 
-public class CostInput extends ChatInput {
+public class CostInput implements ChatInput {
 
     private final SimpleWarps simpleWarps;
     private final Warp warp;
+    private final String from;
 
-    public CostInput(SimpleWarps simpleWarps, Warp warp) {
-        super(null);
+    public CostInput(SimpleWarps simpleWarps, Warp warp, String from) {
         this.simpleWarps = simpleWarps;
         this.warp = warp;
+        this.from = from;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class CostInput extends ChatInput {
             int cost = Integer.parseInt(input);
             warp.setCost(cost);
             simpleWarps.getWarpsManager().saveWarp(warp.getName());
-            simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+            simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
         } catch (NumberFormatException e) {
             messages.sendMessage(player, "editWarp.cost.invalidCost");
         }
@@ -50,7 +52,7 @@ public class CostInput extends ChatInput {
 
     @Override
     public void onPlayerSneak(Player player) {
-        simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+        simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
     }
 
 }

@@ -18,20 +18,22 @@
 package club.spfmc.simplewarps.inputs;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.util.chatimput.ChatInput;
+import club.spfmc.simplewarps.inventories.EditWarpInventory;
+import club.spfmc.simplewarps.util.input.inputs.ChatInput;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class PermissionInput extends ChatInput {
+public class PermissionInput implements ChatInput {
 
     private final SimpleWarps simpleWarps;
     private final Warp warp;
+    private final String from;
 
-    public PermissionInput(SimpleWarps simpleWarps, Warp warp) {
-        super(null);
+    public PermissionInput(SimpleWarps simpleWarps, Warp warp, String from) {
         this.simpleWarps = simpleWarps;
         this.warp = warp;
+        this.from = from;
     }
 
     @Override
@@ -39,12 +41,7 @@ public class PermissionInput extends ChatInput {
         if (!input.contains(" ")) {
             warp.setPermission(input);
             simpleWarps.getWarpsManager().saveWarp(warp.getName());
-            Bukkit.getScheduler().runTaskLater(simpleWarps, new Runnable() {
-                @Override
-                public void run() {
-                    simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
-                }
-            }, 1);
+            Bukkit.getScheduler().runTaskLater(simpleWarps, () -> simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from)), 1);
             return true;
         }
         simpleWarps.getMessages().sendMessage(player, "editWarp.permission.containSpace");
@@ -53,7 +50,7 @@ public class PermissionInput extends ChatInput {
 
     @Override
     public void onPlayerSneak(Player player) {
-        simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+        simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
     }
 
 }

@@ -15,7 +15,7 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.util.dropinput;
+package club.spfmc.simplewarps.util.input.inputs;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

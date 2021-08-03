@@ -2,8 +2,7 @@ package club.spfmc.simplewarps;
 
 import club.spfmc.simplewarps.commands.*;
 import club.spfmc.simplewarps.util.bStats.Metrics;
-import club.spfmc.simplewarps.util.chatimput.ChatInputManager;
-import club.spfmc.simplewarps.util.dropinput.DropInputManager;
+import club.spfmc.simplewarps.util.input.InputManager;
 import club.spfmc.simplewarps.util.inventory.MenuInventoryManager;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.WarpsManager;
@@ -17,19 +16,14 @@ public class SimpleWarps extends JavaPlugin {
 
     private final WarpsManager warpsManager = new WarpsManager(this);
 
-    private MenuInventoryManager menuInventoryManager = new MenuInventoryManager();
+    private final MenuInventoryManager menuInventoryManager = new MenuInventoryManager();
     public MenuInventoryManager getMenuInventoryManager() {
         return menuInventoryManager;
     }
 
-    private final ChatInputManager chatInputManager = new ChatInputManager();
-    public ChatInputManager getChatInputManager() {
-        return chatInputManager;
-    }
-
-    private final DropInputManager dropInputManager = new DropInputManager();
-    public DropInputManager getDropInputManager() {
-        return dropInputManager;
+    private final InputManager inputManager = new InputManager();
+    public InputManager getInputManager() {
+        return inputManager;
     }
 
     @Override
@@ -37,10 +31,7 @@ public class SimpleWarps extends JavaPlugin {
         // bStats
         int pluginId = 12264;
         Metrics metrics = new Metrics(this, pluginId);
-        metrics.addCustomChart(new Metrics.SingleLineChart("homes", () -> {
-            int warps = Yaml.getFolderFiles(getDataFolder() + "/warps").size();
-            return warps;
-        }));
+        metrics.addCustomChart(new Metrics.SingleLineChart("homes", () -> Yaml.getFolderFiles(getDataFolder() + "/warps").size()));
         // Yaml Files
         registerFiles();
         // Load Warps
@@ -76,8 +67,7 @@ public class SimpleWarps extends JavaPlugin {
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(menuInventoryManager, this);
-        pluginManager.registerEvents(chatInputManager, this);
-        pluginManager.registerEvents(dropInputManager, this);
+        pluginManager.registerEvents(inputManager, this);
     }
 
     private void registerCommands() {

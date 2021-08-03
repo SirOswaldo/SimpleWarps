@@ -19,7 +19,7 @@ package club.spfmc.simplewarps.inputs;
 
 import club.spfmc.simplewarps.SimpleWarps;
 import club.spfmc.simplewarps.inventories.EditWarpInventory;
-import club.spfmc.simplewarps.util.dropinput.DropInput;
+import club.spfmc.simplewarps.util.input.inputs.DropInput;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
