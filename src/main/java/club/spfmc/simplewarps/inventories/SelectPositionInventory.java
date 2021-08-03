@@ -18,8 +18,8 @@
 package club.spfmc.simplewarps.inventories;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
-import club.spfmc.simplewarps.util.inventory.menu.MenuInventory;
+import club.spfmc.simplewarps.util.inventory.Item;
+import club.spfmc.simplewarps.util.inventory.MenuInventory;
 import club.spfmc.simplewarps.warp.Warp;
 import club.spfmc.simplewarps.warp.WarpsManager;
 import org.bukkit.entity.Player;
@@ -28,12 +28,10 @@ import org.bukkit.inventory.ItemStack;
 public class SelectPositionInventory extends MenuInventory {
 
     private final SimpleWarps simpleWarps;
-    private final Warp warp;
 
-    public SelectPositionInventory(SimpleWarps simpleWarps, Warp warp) {
+    public SelectPositionInventory(SimpleWarps simpleWarps, Warp warp, String from) {
         this.simpleWarps = simpleWarps;
         WarpsManager warpsManager = simpleWarps.getWarpsManager();
-        this.warp = warp;
         for (Warp i:warpsManager.getWarps()) {
             if (getRows() * 9 > i.getSlot()) {
                 addMenuAction(i.getSlot(), new Item() {
@@ -58,7 +56,8 @@ public class SelectPositionInventory extends MenuInventory {
                         public void onLeftClick(Player player) {
                             player.closeInventory();
                             warp.setSlot(slot);
-                            simpleWarps.getServer().dispatchCommand(player, "EditWarp " + warp.getName());
+                            simpleWarps.getWarpsManager().saveWarp(warp.getName());
+                            simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
                         }
                     });
                 }

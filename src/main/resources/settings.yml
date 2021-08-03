@@ -2,12 +2,13 @@ version: "1.0"
 teleport:
   countdown: 10
   messages:
-    10: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
-    5: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
-    4: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
-    3: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
-    2: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
-    1: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp%&f in %seconds% seconds..."
+    10: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    5: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    4: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    3: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    2: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    1: "&6&lSimple&e&lWarps &7» &fTeleporting to warp &9%warp_name%&f in %seconds% seconds..."
+    0: "&6&lSimple&e&lWarps &7» &fYou has been teleported to &9%warp_name%&f!"
   sounds:
     10: "NOTE_PLING"
     5: "NOTE_PLING"
@@ -17,6 +18,26 @@ teleport:
     1: "NOTE_PLING"
     0: "ENDERMAN_TELEPORT"
 inventory:
+  deleteWarp:
+    title: "Deleting warp!"
+    items:
+      panel:
+        material: "STAINED_GLASS_PANE"
+        data: 1
+      information:
+        material: "PAPER"
+        name: "&6Information"
+        lore:
+          - "&7"
+          - "&6Warp&e: %warp_name%"
+      accept:
+        material: "WOOL"
+        data: 5
+        name: "&aAccept"
+      cancel:
+        material: "WOOL"
+        data: 14
+        name: "&cCancel"
   warps:
     rows: 6
     title: "Warps"
@@ -92,6 +113,7 @@ inventory:
   manageWarps:
     title: "Manage Warp Menu"
     rows: 1
+    noPermissionSound: "VILLAGER_NO"
     items:
       warp:
         material: "ENDER_PEARL"

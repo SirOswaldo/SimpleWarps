@@ -43,7 +43,7 @@ public class EditWarpCommand extends SimpleCommand {
                 String name = arguments[0];
                 if (simpleWarps.getWarpsManager().getWarpsNames().contains(name)) {
                     Warp warp = simpleWarps.getWarpsManager().getWarp(arguments[0]);
-                    simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp));
+                    simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, "cmd"));
                 } else {
                     messages.sendMessage(player, "editWarp.invalidName", new String[][] {{"%warp_name%", arguments[0]}});
                 }

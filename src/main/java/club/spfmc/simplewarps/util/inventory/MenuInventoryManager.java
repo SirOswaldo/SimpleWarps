@@ -15,7 +15,7 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.util.inventory.menu;
+package club.spfmc.simplewarps.util.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,7 +37,9 @@ public class MenuInventoryManager implements Listener {
         Inventory inventory = Bukkit.createInventory(null, menuInventory.getRows() * 9, ChatColor.translateAlternateColorCodes('&', menuInventory.getTitle()));
         for (int slot:menuInventory.getItems().keySet()) {
             Item action = menuInventory.getItems().get(slot);
-            inventory.setItem(slot, action.getItem());
+            if (inventory.getSize() > slot) {
+                inventory.setItem(slot, action.getItem());
+            }
         }
         // Open Inventory
         player.openInventory(inventory);

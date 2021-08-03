@@ -15,17 +15,19 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.util.inventory.menu.inventories;
+package club.spfmc.simplewarps.util.inventory.inventories;
 
-import club.spfmc.simplewarps.util.inventory.menu.Item;
-import club.spfmc.simplewarps.util.inventory.menu.MenuInventory;
+import club.spfmc.simplewarps.util.inventory.Item;
+import club.spfmc.simplewarps.util.inventory.MenuInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class ConfirmInventory extends MenuInventory {
 
+    private final Object object;
 
-    public ConfirmInventory() {
+    public ConfirmInventory(Object object) {
+        this.object = object;
         for (int i = 0; i < getRows() * 9; i++) {
             addMenuAction(i, new Item() {
                 @Override
@@ -43,7 +45,7 @@ public abstract class ConfirmInventory extends MenuInventory {
 
             @Override
             public void onLeftClick(Player player) {
-                onAccept();
+                onAccept(player, object);
             }
         });
 
@@ -64,12 +66,16 @@ public abstract class ConfirmInventory extends MenuInventory {
 
             @Override
             public void onLeftClick(Player player) {
-                onCancel();
+                onCancel(player, object);
             }
         });
     }
 
     public abstract String getTitle();
+
+    public Object getObject() {
+        return object;
+    }
 
     @Override
     public int getRows() {
@@ -81,8 +87,8 @@ public abstract class ConfirmInventory extends MenuInventory {
     public abstract ItemStack getAccept();
     public abstract ItemStack getCancel();
 
-    public abstract void onAccept();
+    public abstract void onAccept(Player player, Object object);
 
-    public abstract void onCancel();
+    public abstract void onCancel(Player player, Object object);
 
 }

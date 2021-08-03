@@ -3,8 +3,8 @@ package club.spfmc.simplewarps;
 import club.spfmc.simplewarps.commands.*;
 import club.spfmc.simplewarps.util.bStats.Metrics;
 import club.spfmc.simplewarps.util.chatimput.ChatInputManager;
-import club.spfmc.simplewarps.util.inventory.menu.MenuInventoryManager;
-import club.spfmc.simplewarps.util.inventory.pages.PagesInventoryManager;
+import club.spfmc.simplewarps.util.dropinput.DropInputManager;
+import club.spfmc.simplewarps.util.inventory.MenuInventoryManager;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.WarpsManager;
 import org.bukkit.plugin.PluginManager;
@@ -22,14 +22,14 @@ public class SimpleWarps extends JavaPlugin {
         return menuInventoryManager;
     }
 
-    private final PagesInventoryManager pagesInventoryManager = new PagesInventoryManager();
-    public PagesInventoryManager getPagesInventoryManager() {
-        return pagesInventoryManager;
-    }
-
     private final ChatInputManager chatInputManager = new ChatInputManager();
     public ChatInputManager getChatInputManager() {
         return chatInputManager;
+    }
+
+    private final DropInputManager dropInputManager = new DropInputManager();
+    public DropInputManager getDropInputManager() {
+        return dropInputManager;
     }
 
     @Override
@@ -75,17 +75,19 @@ public class SimpleWarps extends JavaPlugin {
 
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(pagesInventoryManager, this);
         pluginManager.registerEvents(menuInventoryManager, this);
         pluginManager.registerEvents(chatInputManager, this);
+        pluginManager.registerEvents(dropInputManager, this);
     }
 
     private void registerCommands() {
         new SimpleWarpsCommand(this);
         new ManageWarpsCommand(this);
         new CreateWarpCommand(this);
+        new DeleteWarpCommand(this);
         new WarpsCommand(this);
         new EditWarpCommand(this);
+
     }
 
     public Yaml getSettings() {

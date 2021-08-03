@@ -186,6 +186,12 @@ public class WarpsManager {
         yaml.saveFileConfiguration();
     }
 
+    public void deleteWarp(String name) {
+        Yaml yaml = new Yaml(simpleWarps, "warps", name);
+        yaml.deleteFileConfiguration();
+        warps.remove(name);
+    }
+
     public void addWarp(Warp warp) {
         warps.put(warp.getName(), warp);
         saveWarp(warp.getName());

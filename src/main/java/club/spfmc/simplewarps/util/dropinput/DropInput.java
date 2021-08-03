@@ -15,18 +15,15 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.util.inventory.menu;
+package club.spfmc.simplewarps.util.dropinput;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class Item {
+public interface DropInput {
 
-    public abstract ItemStack getItem();
-    public void onLeftClick(Player player) {}
-    public void onRightClick(Player player) {}
-    public void onMiddleClick(Player player) {}
-    public void onShiftLeftClick(Player player) {}
-    public void onShiftRightClick(Player player) {}
+    void onPLayerDrop(Player player, ItemStack itemStack);
+
+    void onPlayerSneak(Player player);
 
 }

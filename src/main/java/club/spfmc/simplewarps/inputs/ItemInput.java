@@ -15,33 +15,37 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.commands;
+package club.spfmc.simplewarps.inputs;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.inventories.WarpsInventory;
-import club.spfmc.simplewarps.util.command.SimpleCommand;
-import club.spfmc.simplewarps.util.yaml.Yaml;
-import org.bukkit.command.Command;
-import org.bukkit.command.ConsoleCommandSender;
+import club.spfmc.simplewarps.inventories.EditWarpInventory;
+import club.spfmc.simplewarps.util.dropinput.DropInput;
+import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class WarpsCommand extends SimpleCommand {
+public class ItemInput implements DropInput {
 
     private final SimpleWarps simpleWarps;
+    private final Warp warp;
+    private final String from;
 
-    public WarpsCommand(SimpleWarps simpleWarps) {
-        super(simpleWarps, "Warps");
+    public ItemInput(SimpleWarps simpleWarps, Warp warp, String from) {
         this.simpleWarps = simpleWarps;
+        this.warp = warp;
+        this.from = from;
     }
 
     @Override
-    public void onPlayerExecute(Player player, String[] arguments) {
-        simpleWarps.getMenuInventoryManager().openInventory(player, new WarpsInventory(simpleWarps));
+    public void onPLayerDrop(Player player, ItemStack itemStack) {
+        warp.setPreviewItem(itemStack);
+        simpleWarps.getWarpsManager().saveWarp(warp.getName());
+        simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
     }
 
     @Override
-    public void onConsoleExecute(ConsoleCommandSender console, Command command, String[] arguments) {
-        Yaml messages = simpleWarps.getMessages();
-        messages.sendMessage(console, "warps.isConsole");
+    public void onPlayerSneak(Player player) {
+        simpleWarps.getMenuInventoryManager().openInventory(player, new EditWarpInventory(simpleWarps, warp, from));
     }
+
 }

@@ -60,14 +60,32 @@ public class TeleportTask extends Task {
     @Override
     public void actions() {
         if (player.isOnline() && TeleportTask.getTeleporting().contains(player.getName())) {
-            if (player.hasPermission("simple.bypass.home.countdown")) {
-                teleport();
-            } else {
-                Yaml settings = simpleWarps.getSettings();
-                if (countdown == 0) {
-                    teleport();
+            if (player.hasPermission("simple.bypass.warp.countdown")) {
+                countdown = 0;
+            }
+            Yaml settings = simpleWarps.getSettings();
+            if (countdown == 0) {
+                Yaml messages = simpleWarps.getMessages();
+                World world = simpleWarps.getServer().getWorld(warp.getWorld());
+                if (world != null) {
+                    double x = warp.getX();
+                    double y = warp.getY();
+                    double z = warp.getZ();
+                    float yaw = warp.getYaw();
+                    float pitch = warp.getPitch();
+                    Location location = new Location(world, x, y, z, yaw, pitch);
+                    player.teleport(location);
                     if (settings.contains("teleport.messages." + countdown)) {
-                        settings.sendMessage(player, "teleport.messages." + countdown, new String[][] {{"%seconds%", countdown + ""}, {"%warp%", warp.getName()}});
+                        settings.sendMessage(player, "teleport.messages." + countdown, new String[][] {
+                                {"%seconds%", countdown + ""},
+                                {"%warp_name%", warp.getName()},
+                                {"%warp_world%", warp.getWorld()},
+                                {"%warp_x%", Math.round(warp.getX()) + ""},
+                                {"%warp_y%", Math.round(warp.getY()) + ""},
+                                {"%warp_z%", Math.round(warp.getZ()) + ""},
+                                {"%warp_yaw%", Math.round(warp.getYaw()) + ""},
+                                {"%warp_pitch%", Math.round(warp.getPitch()) + ""}
+                        });
                     }
                     if (settings.contains("teleport.sounds." + countdown)) {
                         String sound = settings.getString("teleport.sounds." + countdown);
@@ -78,43 +96,37 @@ public class TeleportTask extends Task {
                         }
                     }
                 } else {
-                    if (settings.contains("teleport.messages." + countdown)) {
-                        settings.sendMessage(player, "teleport.messages." + countdown, new String[][] {{"%seconds%", countdown + ""}});
-                    }
-                    if (settings.contains("teleport.sounds." + countdown)) {
-                        String sound = settings.getString("teleport.sounds." + countdown);
-                        try {
-                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1, 1);
-                        } catch (IllegalArgumentException e) {
-                            simpleWarps.getLogger().info("The sound: " + sound + " no found in your server version.");
-                        }
-                    }
-                    countdown--;
+                    messages.sendMessage(player, "warp.invalidWorld", new String[][] {{"%world%", warp.getWorld()}});
                 }
+                TeleportTask.teleporting.remove(player.getName());
+                stopScheduler();
+            } else {
+                if (settings.contains("teleport.messages." + countdown)) {
+                    settings.sendMessage(player, "teleport.messages." + countdown, new String[][] {
+                            {"%seconds%", countdown + ""},
+                            {"%warp_name%", warp.getName()},
+                            {"%warp_world%", warp.getWorld()},
+                            {"%warp_x%", Math.round(warp.getX()) + ""},
+                            {"%warp_y%", Math.round(warp.getY()) + ""},
+                            {"%warp_z%", Math.round(warp.getZ()) + ""},
+                            {"%warp_yaw%", Math.round(warp.getYaw()) + ""},
+                            {"%warp_pitch%", Math.round(warp.getPitch()) + ""}
+                    });
+                }
+                if (settings.contains("teleport.sounds." + countdown)) {
+                    String sound = settings.getString("teleport.sounds." + countdown);
+                    try {
+                        player.playSound(player.getLocation(), Sound.valueOf(sound), 1, 1);
+                    } catch (IllegalArgumentException e) {
+                        simpleWarps.getLogger().info("The sound: " + sound + " no found in your server version.");
+                    }
+                }
+                countdown--;
             }
         } else {
             TeleportTask.teleporting.remove(player.getName());
             stopScheduler();
         }
-    }
-
-    private void teleport() {
-        Yaml messages = simpleWarps.getMessages();
-        World world = simpleWarps.getServer().getWorld(warp.getWorld());
-        if (world != null) {
-            double x = warp.getX();
-            double y = warp.getY();
-            double z = warp.getZ();
-            float yaw = warp.getYaw();
-            float pitch = warp.getPitch();
-            Location location = new Location(world, x, y, z, yaw, pitch);
-            player.teleport(location);
-            messages.sendMessage(player, "warp.teleported", new String[][] {{"%warp%", warp.getName()}});
-        } else {
-            messages.sendMessage(player, "warp.invalidWorld", new String[][] {{"%world%", warp.getWorld()}});
-        }
-        TeleportTask.teleporting.remove(player.getName());
-        stopScheduler();
     }
 
 }

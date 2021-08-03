@@ -19,21 +19,24 @@ package club.spfmc.simplewarps.inventories;
 
 import club.spfmc.simplewarps.SimpleWarps;
 import club.spfmc.simplewarps.inputs.CostInput;
+import club.spfmc.simplewarps.inputs.ItemInput;
 import club.spfmc.simplewarps.inputs.PermissionInput;
 import club.spfmc.simplewarps.util.chatimput.ChatInput;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
-import club.spfmc.simplewarps.util.inventory.menu.MenuInventory;
+import club.spfmc.simplewarps.util.inventory.Item;
+import club.spfmc.simplewarps.util.inventory.MenuInventory;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EditWarpInventory extends MenuInventory {
 
     private final SimpleWarps simpleWarps;
     private final Warp warp;
-
-    public EditWarpInventory(SimpleWarps simpleWarps, Warp warp) {
+    public EditWarpInventory(SimpleWarps simpleWarps, Warp warp, String from) {
         this.simpleWarps = simpleWarps;
         this.warp = warp;
         Yaml settings = simpleWarps.getSettings();
@@ -83,6 +86,13 @@ public class EditWarpInventory extends MenuInventory {
             public ItemStack getItem() {
                 return settings.getItemStack("inventory.editWarp.items.preview");
             }
+
+            @Override
+            public void onLeftClick(Player player) {
+                player.closeInventory();
+                simpleWarps.getDropInputManager().addInput(player, new ItemInput(simpleWarps, warp, from));
+                messages.sendMessage(player, "editWarp.previewItem.enterNewPreviewItem");
+            }
         });
         // Change Position in GUI
         addMenuAction(16, new Item() {
@@ -95,7 +105,7 @@ public class EditWarpInventory extends MenuInventory {
 
             @Override
             public void onLeftClick(Player player) {
-                simpleWarps.getMenuInventoryManager().openInventory(player, new SelectPositionInventory(simpleWarps, warp));
+                simpleWarps.getMenuInventoryManager().openInventory(player, new SelectPositionInventory(simpleWarps, warp, from));
             }
         });
         // Change Location
@@ -157,6 +167,23 @@ public class EditWarpInventory extends MenuInventory {
                 messages.sendMessage(player, "editWarp.cost.enterNewCost");
             }
         });
+
+        // Close
+        addMenuAction(28, new Item() {
+            @Override
+            public ItemStack getItem() {
+                return settings.getItemStack("inventory.editWarp.items.close");
+            }
+
+            @Override
+            public void onLeftClick(Player player) {
+                player.closeInventory();
+                if (from.equals("gui")) {
+                    List<Object> warps = new ArrayList<>(simpleWarps.getWarpsManager().getWarps());
+                    simpleWarps.getMenuInventoryManager().openInventory(player, new ManageWarpsInventory(simpleWarps, warps));
+                }
+            }
+        });
     }
 
     @Override
@@ -169,4 +196,5 @@ public class EditWarpInventory extends MenuInventory {
     public int getRows() {
         return 5;
     }
+
 }

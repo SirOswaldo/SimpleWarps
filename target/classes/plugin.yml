@@ -23,3 +23,7 @@ commands:
 permissions:
   simple.admin.warps:
     description: Manage this plugin.
+  simple.delete.warp:
+    description: Delete one warp
+  simple.bypass.warp.countdown:
+    description: Bypass warp coutdown

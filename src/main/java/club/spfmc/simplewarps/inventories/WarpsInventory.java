@@ -18,8 +18,8 @@
 package club.spfmc.simplewarps.inventories;
 
 import club.spfmc.simplewarps.SimpleWarps;
-import club.spfmc.simplewarps.util.inventory.menu.Item;
-import club.spfmc.simplewarps.util.inventory.menu.MenuInventory;
+import club.spfmc.simplewarps.util.inventory.Item;
+import club.spfmc.simplewarps.util.inventory.MenuInventory;
 import club.spfmc.simplewarps.util.yaml.Yaml;
 import club.spfmc.simplewarps.warp.Warp;
 import org.bukkit.Location;

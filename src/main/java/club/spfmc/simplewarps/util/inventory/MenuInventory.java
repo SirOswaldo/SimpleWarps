@@ -15,7 +15,7 @@
  *      along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package club.spfmc.simplewarps.util.inventory.menu;
+package club.spfmc.simplewarps.util.inventory;
 
 import java.util.HashMap;
 
@@ -33,6 +33,11 @@ public abstract class MenuInventory {
 
     public void addMenuAction(int slot, Item item) {
         items.put(slot, item);
+    }
+    public void addMenuActions(int[] slots, Item item) {
+        for (int slot:slots) {
+            items.put(slot, item);
+        }
     }
 
 }
